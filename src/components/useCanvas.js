@@ -5,8 +5,17 @@ const useCanvas = (draw) => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
     const { devicePixelRatio: ratio = 1 } = window;
     const context = canvas.getContext("2d");
+    console.log(context);
     let frameCount = 0;
     let animationFrameId;
 
@@ -19,6 +28,7 @@ const useCanvas = (draw) => {
 
     return () => {
       window.cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", handleResize);
     };
   }, [draw]);
 
