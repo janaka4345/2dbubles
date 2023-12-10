@@ -42,11 +42,11 @@ export default function Canvas4(params) {
     ctx.clearRect(0, 0, ctx.canvas.width * ratio, ctx.canvas.height * ratio);
     particles.forEach((particle) => {
       drawParticle({ ctx, particle });
-      particle.x > ctx.canvas.width || particle.x < 0
+      particle.x > ctx.canvas.width || particle.x < particle.radius
         ? (particle.speedX *= -1)
         : null;
 
-      particle.y > ctx.canvas.height || particle.y < 0
+      particle.y > ctx.canvas.height || particle.y < particle.radius
         ? (particle.speedY *= -1)
         : null;
 
