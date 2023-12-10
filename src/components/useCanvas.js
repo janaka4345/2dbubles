@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 
 const useCanvas = (draw) => {
+  // console.log("rendrd");
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -15,7 +16,7 @@ const useCanvas = (draw) => {
 
     const { devicePixelRatio: ratio = 1 } = window;
     const context = canvas.getContext("2d");
-    console.log(context);
+    // console.log(context);
     let frameCount = 0;
     let animationFrameId;
 

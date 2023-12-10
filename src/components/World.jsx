@@ -1,4 +1,5 @@
 import Canvas2 from "./Canvas2";
+import Canvas3 from "./Canvas3";
 
 // import Canvas1 from "./Canvas1";
 export default function World(props) {
@@ -6,7 +7,8 @@ export default function World(props) {
   return (
     <>
       {/* <Canvas1 /> */}
-      <Canvas2 />
+      {/* <Canvas2 /> */}
+      <Canvas3 />
     </>
   );
 }
