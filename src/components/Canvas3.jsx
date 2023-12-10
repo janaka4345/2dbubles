@@ -8,11 +8,11 @@ export default function Canvas4(params) {
   const particles = [];
 
   const generateRandomParticle = () => {
-    const x = Math.random() * canvas.current.width;
-    const y = Math.random() * canvas.current.height;
     const speedX = Math.random() - 0.5;
     const speedY = Math.random() - 0.5;
     const radius = Math.random() * 5 + 1;
+    const x = Math.random() * canvas.current.width + radius;
+    const y = Math.random() * canvas.current.height + radius;
     const color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${
       Math.random() * 255
     }, 1)`;
