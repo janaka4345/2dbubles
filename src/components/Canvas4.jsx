@@ -4,18 +4,22 @@ const particles = [];
 export default function Canvas4(params) {
   // console.log("ren");
   const canvas = useCanvas(draw);
-  // const mouse = useRef({ x: undefined, y: undefined });
+  const mouse = useRef({ x: undefined, y: undefined });
 
-  // const handleClick = (e) => {
-  //   mouse.current.x = e.clientX;
-  //   mouse.current.y = e.clientY;
-  // };
-
-  useEffect(() => {
-    for (let i = 0; i < 100; i++) {
-      particles.push(generateRandomParticle(canvas));
+  const handleClick = (e) => {
+    mouse.current.x = e.clientX;
+    mouse.current.y = e.clientY;
+    for (let i = 0; i < 20; i++) {
+      particles.push(generateRandomParticle({ canvas, mouse }));
     }
-  }, []);
+  };
+
+  // useEffect(() => {
+  //   // for (let i = 0; i < 50; i++) {
+  //   //   particles.push(generateRandomParticle({ canvas, mouse }));
+  //   // }
+  //   console.log(particles);
+  // }, []);
 
   return (
     <>
@@ -23,17 +27,20 @@ export default function Canvas4(params) {
         id="canvas1"
         ref={canvas}
         // onClick={handleClick}
+        onMouseMove={handleClick}
       />
     </>
   );
 }
 
-function generateRandomParticle(canvas) {
+function generateRandomParticle({ canvas, mouse }) {
   const speedX = Math.random() - 0.5;
   const speedY = Math.random() - 0.5;
   const radius = Math.random() * 5 + 1;
-  const x = Math.random() * canvas.current.width + radius;
-  const y = Math.random() * canvas.current.height + radius;
+  // const x = Math.random() * canvas.current.width + radius;
+  // const y = Math.random() * canvas.current.height + radius;
+  const x = mouse.current.x + Math.random() * 20;
+  const y = mouse.current.y + Math.random() * 20;
   const color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${
     Math.random() * 255
   }, 1)`;
@@ -42,18 +49,11 @@ function generateRandomParticle(canvas) {
 }
 
 function draw(ctx, frameCount, ratio) {
-  // console.log(particles);
+  // console.log(particles.length);
   ctx.clearRect(0, 0, ctx.canvas.width * ratio, ctx.canvas.height * ratio);
   particles.forEach((particle) => {
-    drawParticle({ ctx, particle });
-    particle.x > ctx.canvas.width || particle.x < particle.radius
-      ? (particle.speedX *= -1)
-      : null;
-
-    particle.y > ctx.canvas.height || particle.y < particle.radius
-      ? (particle.speedY *= -1)
-      : null;
-
+    particle.radius > 0.3 ? drawParticle({ ctx, particle }) : null;
+    particle.radius -= 0.1;
     particle.x += particle.speedX;
     particle.y += particle.speedY;
   });
