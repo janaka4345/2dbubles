@@ -1,12 +1,13 @@
 import { useEffect, useRef } from "react";
 import useCanvas from "./useCanvas";
-const particles = [];
+let particles = [];
 export default function Canvas4(params) {
   // console.log("ren");
   const canvas = useCanvas(draw);
   const mouse = useRef({ x: undefined, y: undefined });
 
   const handleClick = (e) => {
+    // console.log(particles.length);
     mouse.current.x = e.clientX;
     mouse.current.y = e.clientY;
     for (let i = 0; i < 10; i++) {
@@ -50,7 +51,7 @@ function generateRandomParticle({ canvas, mouse }) {
 }
 
 function draw(ctx, frameCount, ratio) {
-  // console.log(particles.length);
+  console.log(particles.length);
   // ctx.clearRect(0, 0, ctx.canvas.width * ratio, ctx.canvas.height * ratio);
   ctx.fillStyle = "rgba(0,0,0,0.1)";
   ctx.fillRect(0, 0, ctx.canvas.width * ratio, ctx.canvas.height * ratio);
@@ -60,6 +61,7 @@ function draw(ctx, frameCount, ratio) {
     particle.x += particle.speedX;
     particle.y += particle.speedY;
   });
+  particles = particles.filter((particle) => particle.radius >= 0.3);
 }
 function drawParticle({ ctx, particle }) {
   ctx.beginPath();
